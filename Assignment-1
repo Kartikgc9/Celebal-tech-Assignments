@@ -1,0 +1,64 @@
+import random
+import sys
+
+
+def craft_lower_triangle(height):
+    for row in range(height):
+        stars = '*' * (row + 1)
+        print(f"{stars}  // Row {row + 1} ")
+
+
+def craft_upper_triangle(height):
+    for row in range(height, 0, -1):
+        stars = '*' * row
+        print(f"{stars}  // Row {height - row + 1} ")
+
+
+def craft_star_pyramid(height):
+    for row in range(height):
+        spaces = ' ' * (height - row - 1)
+
+        separator = '.' if random.random() < 0.3 else ' '
+        stars = separator.join(['*'] * (2 * row + 1))
+        print(f"{spaces}{stars}{spaces}  // Pyramid tier {row + 1}")
+
+
+def starry_showcase(height=None):
+    if height is None:
+        try:
+            user_input = input("How tall should our starry creation be? (1-10 recommended): ")
+            if user_input.strip() == "":
+                print("No input? I'll go with a height of 5!")
+                height = 5
+            else:
+                height = int(user_input)
+        except (ValueError, EOFError):
+            print("Oops, something went wrong with input! Defaulting to height 5.")
+            height = 5
+    else:
+        try:
+            height = int(height)
+        except ValueError:
+            print("Invalid height provided! Using default height 5.")
+            height = 5
+
+    if height < 1 or height > 20:
+        print("Let's keep the height between 1 and 20 for a dazzling display!")
+        height = min(max(height, 1), 20)
+
+    print("\n=== Your Starry Lower Triangle ===")
+    craft_lower_triangle(height)
+
+    print("\n=== Your Starry Upper Triangle ===")
+    craft_upper_triangle(height)
+
+    print("\n=== Your Majestic Star Pyramid ===")
+    craft_star_pyramid(height)
+
+
+if __name__ == "__main__":
+    print("Welcome to the Starry Pattern Maker!")
+    if len(sys.argv) > 1:
+        starry_showcase(sys.argv[1])
+    else:
+        starry_showcase()
